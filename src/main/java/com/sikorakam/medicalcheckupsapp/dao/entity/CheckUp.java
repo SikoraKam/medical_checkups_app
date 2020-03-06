@@ -1,5 +1,7 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
+import com.sikorakam.medicalcheckupsapp.dao.Category;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -12,20 +14,24 @@ public class CheckUp {
 
     @Id
     private Long id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "category")
-    private String category;
+    private Category category;
     @Column(name = "date")
     private LocalDate date;
-    @Column(name = "result")
-    private Double result;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "checkup")
+    private Result result;
+
+
 
     public CheckUp(){
     }
 
-    public CheckUp(String category, LocalDate date, Double result) {
+    public CheckUp(Category category, LocalDate date, Double result) {
         this.category = category;
         this.date = date;
-        this.result = result;
+
     }
 
     public Long getId() {
@@ -36,11 +42,11 @@ public class CheckUp {
         this.id = id;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -52,11 +58,5 @@ public class CheckUp {
         this.date = date;
     }
 
-    public Double getResult() {
-        return result;
-    }
 
-    public void setResult(Double result) {
-        this.result = result;
-    }
 }
