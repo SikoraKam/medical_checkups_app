@@ -1,4 +1,4 @@
-package com.sikorakam.medicalcheckupsapp.api;
+/*package com.sikorakam.medicalcheckupsapp.api;
 
 import com.sikorakam.medicalcheckupsapp.dao.entity.CheckUp;
 import com.sikorakam.medicalcheckupsapp.manager.CheckUpsManager;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/checkups")
+@RequestMapping("/api/medicalcheckups")
 public class MedicalCheckUpsApi {
     private CheckUpsManager checkUps;
 
@@ -36,3 +36,4 @@ public class MedicalCheckUpsApi {
         checkUps.deleteById(index);
     }
 }
+*/

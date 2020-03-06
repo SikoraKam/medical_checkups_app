@@ -1,4 +1,4 @@
-package com.sikorakam.medicalcheckupsapp.manager;
+/*package com.sikorakam.medicalcheckupsapp.manager;
 
 
 import com.sikorakam.medicalcheckupsapp.dao.CheckUpsRepo;
@@ -35,11 +35,11 @@ public class CheckUpsManager {
         checkUpsRepo.deleteById(id);
     }
 
-
+    /*
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB(){
         save(new CheckUp("Badanie krwi", LocalDate.of(2018,10,01),52.9));
         save(new CheckUp("Badanie krwi", LocalDate.of(2017,9,11),51.2));
 
     }
-}
+}*/
