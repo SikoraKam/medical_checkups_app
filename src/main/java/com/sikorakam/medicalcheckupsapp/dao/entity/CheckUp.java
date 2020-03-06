@@ -1,16 +1,19 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
 import com.sikorakam.medicalcheckupsapp.dao.Category;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "checkup")
+@Table(name = "checkUps2")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CheckUp {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Id
     private Long id;
@@ -20,7 +23,7 @@ public class CheckUp {
     @Column(name = "date")
     private LocalDate date;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "checkup")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "checkUp")
     private Result result;
 
 
@@ -28,10 +31,9 @@ public class CheckUp {
     public CheckUp(){
     }
 
-    public CheckUp(Category category, LocalDate date, Double result) {
+    public CheckUp(Category category, LocalDate date) {
         this.category = category;
         this.date = date;
-
     }
 
     public Long getId() {
@@ -59,4 +61,11 @@ public class CheckUp {
     }
 
 
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
 }

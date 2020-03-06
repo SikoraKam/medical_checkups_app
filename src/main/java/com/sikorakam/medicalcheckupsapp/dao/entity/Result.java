@@ -1,8 +1,5 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,15 +13,14 @@ public class Result {
     private Double hpv;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "checkUp_id", nullable = false)
+    @JoinColumn(name = "checkup_id", nullable = false)
     private CheckUp checkUp;
 
     public Result() {
     }
 
-    public Result(Double hpv, CheckUp checkUp) {
+    public Result(Double hpv) {
         this.hpv = hpv;
-        this.checkUp = checkUp;
     }
 
     public Long getId() {
@@ -43,4 +39,11 @@ public class Result {
         this.hpv = hpv;
     }
 
+    public CheckUp getCheckUp() {
+        return checkUp;
+    }
+
+    public void setCheckUp(CheckUp checkUp) {
+        this.checkUp = checkUp;
+    }
 }
