@@ -6,8 +6,10 @@ import com.sikorakam.medicalcheckupsapp.dao.entity.Result;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.jvm.hotspot.debugger.Page;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -20,13 +22,13 @@ public class ResultController {
     @Autowired
     private CheckUpsRepo checkUpsRepo;
 
-    @GetMapping("/results")
-    public List<Result> findAllResults(){
+    @GetMapping("checkups/{checkupId}/results")
+    public Page<Result> findAllResultsByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId, Pageable pageable){
         return resultsRepository.findAll();
     }
 
     @GetMapping("/checkups/{checkupId}/results")
-    public Result findResultByCheckUpId(@RequestParam Long checkUpId) throws NotFoundException {
+    public Result findResultByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId) throws NotFoundException {
         if(!checkUpsRepo.existsById(checkUpId)){
             throw new NotFoundException("chechup not found with this id");
         }
@@ -36,7 +38,7 @@ public class ResultController {
         else throw new NotFoundException("not found");
     }
     @PostMapping("/checkups/{checkupId}/results")
-    public Result addResult(@PathVariable Long checkUpId,@Valid @RequestBody Result result) throws NotFoundException {
+    public Result addResult(@PathVariable (value = "checkupId") Long checkUpId,@Valid @RequestBody Result result) throws NotFoundException {
         return checkUpsRepo.findById(checkUpId)
                 .map(checkUp -> {
                     result.setCheckUp(checkUp);
@@ -44,7 +46,7 @@ public class ResultController {
                 }).orElseThrow(()->new NotFoundException("checkUp not found"));
     }
     @PutMapping("results/{resultId}")
-    public Result updateResult(@RequestBody Result result){
+    public Result updateResult(@PathVariable Result result){
         return resultsRepository.save(result);
     }
 
