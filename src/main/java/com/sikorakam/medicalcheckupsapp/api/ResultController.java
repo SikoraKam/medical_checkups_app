@@ -6,7 +6,7 @@ import com.sikorakam.medicalcheckupsapp.dao.entity.Result;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.jvm.hotspot.debugger.Page;
+
 
 import javax.validation.Valid;
 import java.awt.print.Pageable;
@@ -22,15 +22,15 @@ public class ResultController {
     @Autowired
     private CheckUpsRepo checkUpsRepo;
 
-    @GetMapping("checkups/{checkupId}/results")
-    public Page<Result> findAllResultsByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId, Pageable pageable){
+    @GetMapping("/results")
+    public List<Result> findAllResults(){
         return resultsRepository.findAll();
     }
 
     @GetMapping("/checkups/{checkupId}/results")
     public Result findResultByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId) throws NotFoundException {
         if(!checkUpsRepo.existsById(checkUpId)){
-            throw new NotFoundException("chechup not found with this id");
+            throw new NotFoundException("checkup not found with this id");
         }
         List<Result> results = resultsRepository.findByCheckUpId(checkUpId);
         if(results.size()>0)
@@ -46,12 +46,15 @@ public class ResultController {
                 }).orElseThrow(()->new NotFoundException("checkUp not found"));
     }
     @PutMapping("results/{resultId}")
-    public Result updateResult(@PathVariable Result result){
-        return resultsRepository.save(result);
+    public Result updateResult(@PathVariable Long resultId, @Valid @RequestBody Result resultNew) throws NotFoundException {
+        return resultsRepository.findById(resultId).map(result -> {
+            result.setHpv(resultNew.getHpv());
+            return resultsRepository.save(result);
+        }).orElseThrow(()->new NotFoundException("Result not found"));
     }
 
     @DeleteMapping("results/{resultId}")
-    public String  deleteResult(@RequestParam @PathVariable Long resultId) throws NotFoundException {
+    public String  deleteResult(@PathVariable Long resultId) throws NotFoundException {
         return resultsRepository.findById(resultId)
                 .map(result -> {
                     resultsRepository.delete(result);

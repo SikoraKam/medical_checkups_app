@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "checkUps3")
+@Table(name = "checkUps")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CheckUp {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
     @Id
     private Long id;
@@ -26,7 +26,14 @@ public class CheckUp {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "checkUp")
     private Result result;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
 
+    
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     public CheckUp(){
     }
@@ -59,16 +66,5 @@ public class CheckUp {
     public void setDate(LocalDate date) {
         this.date = date;
     }
-
-
-    public Result getResult() {
-        return result;
-    }
-
-    public void setResult(Result result) {
-        this.result = result;
-    }
-
-
 
 }
