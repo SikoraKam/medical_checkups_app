@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "client")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Id
     private Long id;

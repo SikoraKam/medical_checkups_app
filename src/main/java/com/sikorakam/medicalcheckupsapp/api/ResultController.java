@@ -38,15 +38,15 @@ public class ResultController {
         else throw new NotFoundException("not found");
     }
     @PostMapping("/checkups/{checkupId}/results")
-    public Result addResult(@PathVariable (value = "checkupId") Long checkUpId,@Valid @RequestBody Result result) throws NotFoundException {
-        return checkUpsRepo.findById(checkUpId)
+    public Result addResult(@PathVariable (value = "checkupId") Long checkupId, @RequestBody Result result) throws NotFoundException {
+        return checkUpsRepo.findById(checkupId)
                 .map(checkUp -> {
                     result.setCheckUp(checkUp);
                     return resultsRepository.save(result);
                 }).orElseThrow(()->new NotFoundException("checkUp not found"));
     }
     @PutMapping("results/{resultId}")
-    public Result updateResult(@PathVariable Long resultId, @Valid @RequestBody Result resultNew) throws NotFoundException {
+    public Result updateResult(@PathVariable (value = "resultId") Long resultId, @Valid @RequestBody Result resultNew) throws NotFoundException {
         return resultsRepository.findById(resultId).map(result -> {
             result.setHpv(resultNew.getHpv());
             return resultsRepository.save(result);
@@ -58,7 +58,7 @@ public class ResultController {
         return resultsRepository.findById(resultId)
                 .map(result -> {
                     resultsRepository.delete(result);
-                    return "Deleted";
+                    return "Result Deleted";
                 }).orElseThrow(()->new NotFoundException("Result not found"));
     }
 

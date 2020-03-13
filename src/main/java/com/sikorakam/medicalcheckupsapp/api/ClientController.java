@@ -38,9 +38,12 @@ public class ClientController {
         }).orElseThrow(()->new NotFoundException("client not found"));
     }
 
-    @DeleteMapping("clients/{clientId}")
-    public void deleteClient(@PathVariable Long id){
-        clientRepository.deleteById(id);
+    @DeleteMapping("/clients/{clientId}")
+    public String deleteClient(@PathVariable (value = "clientId") Long id) throws NotFoundException {
+        return clientRepository.findById(id).map(client -> {
+            clientRepository.delete(client);
+            return "client deleted";
+        }).orElseThrow(()->new NotFoundException("client not found"));
     }
 
 }
