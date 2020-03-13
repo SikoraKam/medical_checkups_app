@@ -66,10 +66,10 @@ public class CheckUpController {
 
 
     @DeleteMapping("/checkups/{id}")
-    public String deleteCheckUp(@PathVariable Long id) throws NotFoundException {
+    public String deleteCheckUp(@PathVariable (value = "id") Long id) throws NotFoundException {
         return checkUpsRepo.findById(id).map(checkUp -> {
             checkUpsRepo.delete(checkUp);
-            return "Deleted";
+            return "checkup deleted";
         }).orElseThrow(()->new NotFoundException("checkup not found"));
     }
 

@@ -1,13 +1,16 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "results")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Result {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "hpv")
     private Double hpv;

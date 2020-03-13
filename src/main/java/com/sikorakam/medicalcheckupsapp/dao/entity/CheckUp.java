@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CheckUp {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Id
     private Long id;
@@ -30,7 +30,7 @@ public class CheckUp {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    
+
     public void setClient(Client client) {
         this.client = client;
     }
