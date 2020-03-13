@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table(name = "checkUps2")
+@Table(name = "checkUps3")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CheckUp {
 
@@ -68,4 +68,7 @@ public class CheckUp {
     public void setResult(Result result) {
         this.result = result;
     }
+
+
+
 }

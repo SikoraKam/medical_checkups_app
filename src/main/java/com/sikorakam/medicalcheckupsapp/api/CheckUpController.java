@@ -1,14 +1,22 @@
 package com.sikorakam.medicalcheckupsapp.api;
 
+import com.sikorakam.medicalcheckupsapp.dao.Category;
 import com.sikorakam.medicalcheckupsapp.dao.CheckUpsRepo;
 import com.sikorakam.medicalcheckupsapp.dao.entity.CheckUp;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Optional;
 
+import static com.sikorakam.medicalcheckupsapp.dao.Category.KREW;
+
+@Service
 @RestController
 @RequestMapping("/api")
 public class CheckUpController {
@@ -22,7 +30,7 @@ public class CheckUpController {
     }
 
     @GetMapping("/checkups/{id}")
-    public Optional<CheckUp> findCheckUpById(@RequestParam Long id){
+    public Optional<CheckUp> findCheckUpById(@PathVariable Long id){
         return checkUpsRepo.findById(id);
     }
 
@@ -39,12 +47,23 @@ public class CheckUpController {
                     checkUp.setDate(checkUpNew.getDate());
                     return checkUpsRepo.save(checkUp);
                 }).orElseThrow(()->new NotFoundException("check-up with this id not found"));
+
+
     }
 
+
     @DeleteMapping("/checkups/{id}")
-    public void deleteCheckUp(@RequestParam Long id){
+    public void deleteCheckUp(@PathVariable Long id){
         checkUpsRepo.deleteById(id);
     }
+
+    /*
+    @EventListener(ApplicationReadyEvent.class)
+    public void fillDB(){
+        Category categ = KREW;
+        checkUpsRepo.save(new CheckUp(KREW, LocalDate.of(2018,10,01)));
+
+    }*/
 
 
 }
