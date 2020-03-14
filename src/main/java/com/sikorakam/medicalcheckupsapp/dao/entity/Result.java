@@ -10,12 +10,12 @@ import javax.persistence.*;
 public class Result {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "hpv")
     private Double hpv;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "checkup_id", nullable = false)
     private CheckUp checkUp;
 

@@ -38,7 +38,7 @@ public class ResultController {
         else throw new NotFoundException("not found");
     }
     @PostMapping("/checkups/{checkupId}/results")
-    public Result addResult(@PathVariable (value = "checkupId") Long checkupId, @RequestBody Result result) throws NotFoundException {
+    public Result addResult(@PathVariable (value = "checkupId") Long checkupId, @Valid @RequestBody Result result) throws NotFoundException {
         return checkUpsRepo.findById(checkupId)
                 .map(checkUp -> {
                     result.setCheckUp(checkUp);
