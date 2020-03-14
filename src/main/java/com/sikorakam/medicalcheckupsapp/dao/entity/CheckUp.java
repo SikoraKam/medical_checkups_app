@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CheckUp {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     @Id
     private Long id;
@@ -26,7 +26,7 @@ public class CheckUp {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "checkUp")
     private Result result;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 

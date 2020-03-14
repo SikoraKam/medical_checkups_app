@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.PreRemove;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -67,11 +68,10 @@ public class CheckUpController {
 
     @DeleteMapping("/checkups/{id}")
     public String deleteCheckUp(@PathVariable (value = "id") Long id) throws NotFoundException {
-        return checkUpsRepo.findById(id).map(checkUp -> {
-            checkUpsRepo.delete(checkUp);
-            return "checkup deleted";
-        }).orElseThrow(()->new NotFoundException("checkup not found"));
+        checkUpsRepo.deleteById(id);
+        return "deleted";
     }
+
 
     /*
     @EventListener(ApplicationReadyEvent.class)
@@ -80,6 +80,5 @@ public class CheckUpController {
         checkUpsRepo.save(new CheckUp(KREW, LocalDate.of(2018,10,01)));
 
     }*/
-
 
 }
