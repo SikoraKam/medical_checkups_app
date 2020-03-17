@@ -2,15 +2,17 @@ package com.sikorakam.medicalcheckupsapp.api;
 
 import com.sikorakam.medicalcheckupsapp.dao.CheckUpsRepo;
 import com.sikorakam.medicalcheckupsapp.dao.ResultsRepository;
+import com.sikorakam.medicalcheckupsapp.dao.TestRepository;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Result;
+import com.sikorakam.medicalcheckupsapp.dao.entity.Test;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
-import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -21,6 +23,9 @@ public class ResultController {
 
     @Autowired
     private CheckUpsRepo checkUpsRepo;
+
+    @Autowired
+    private TestRepository testRepository;
 
     @GetMapping("/results")
     public List<Result> findAllResults(){
@@ -45,12 +50,34 @@ public class ResultController {
                     return resultsRepository.save(result);
                 }).orElseThrow(()->new NotFoundException("checkUp not found"));
     }
+
+    @PostMapping("/checkups/{checkupId}/results/{testId}")
+    public Result addResultWithTest(@PathVariable (value = "checkupId") Long checkupId,@PathVariable(value = "testId") Long testId, @Valid @RequestBody Result result) throws NotFoundException {
+        Optional<Test> optionalTest = testRepository.findById(testId);
+        return checkUpsRepo.findById(checkupId).map(checkUp -> {
+           // result.getTests().add(optionalTest.get());
+            result.setCheckUp(checkUp);
+            return resultsRepository.save(result);
+        }).orElseThrow(()->new NotFoundException("checkup not found"));
+
+    }
+
+
     @PutMapping("results/{resultId}")
     public Result updateResult(@PathVariable (value = "resultId") Long resultId, @Valid @RequestBody Result resultNew) throws NotFoundException {
         return resultsRepository.findById(resultId).map(result -> {
             result.setValue(resultNew.getValue());
             return resultsRepository.save(result);
         }).orElseThrow(()->new NotFoundException("Result not found"));
+    }
+
+    @PutMapping("results/{resultId}/{testId}")
+    public Result setTestToResult(@PathVariable (value = "resultId") Long resultId, @PathVariable (value = "testId") Long testId) throws NotFoundException {
+
+        Optional<Test> optionalTest = testRepository.findById(testId);
+        Optional<Result> optionalResult = resultsRepository.findById(resultId);
+        optionalResult.get().getTests().add(optionalTest.get());
+        return resultsRepository.save(optionalResult.get());
     }
 
     @DeleteMapping("results/{resultId}")

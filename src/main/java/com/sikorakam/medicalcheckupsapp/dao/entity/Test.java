@@ -1,5 +1,6 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class Test {
     private Double max;
 
     @ManyToMany(mappedBy = "tests", fetch = FetchType.LAZY)
-    private Set<CheckUp> checkUps;
+    private Set<Result> results;
 
     public Test() {
     }
@@ -33,14 +34,6 @@ public class Test {
         this.testName = testName;
         this.min = min;
         this.max = max;
-    }
-
-    public Test(String category, String testName, Double min, Double max, Set<CheckUp> checkUps) {
-        this.category = category;
-        this.testName = testName;
-        this.min = min;
-        this.max = max;
-        this.checkUps = checkUps;
     }
 
     public Long getId() {
@@ -82,12 +75,12 @@ public class Test {
     public void setMax(Double max) {
         this.max = max;
     }
-
-    public Set<CheckUp> getCheckUps() {
-        return checkUps;
+    @JsonIgnore
+    public Set<Result> getResults() {
+        return results;
     }
 
-    public void setCheckUps(Set<CheckUp> checkUps) {
-        this.checkUps = checkUps;
+    public void setResults(Set<Result> results) {
+        this.results = results;
     }
 }

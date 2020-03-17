@@ -1,10 +1,11 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import com.google.common.collect.Range;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "results")
@@ -17,13 +18,14 @@ public class Result {
     @Column(name = "value")
     private Double value;
 
-    @OneToOne(fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "checkup_id", nullable = false)
     private CheckUp checkUp;
 
-    @Column(name = "test_id")
-    private Long testId;
-
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "result_test", joinColumns = @JoinColumn(name = "result_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"))
+    private Set<Test> tests;
 
     public Result() {
     }
@@ -31,15 +33,6 @@ public class Result {
     public Result(Double value) {
         this.value = value;
     }
-
-    public Long getTestId() {
-        return testId;
-    }
-
-    public void setTestId(Long testId) {
-        this.testId = testId;
-    }
-
 
     public Long getId() {
         return id;
@@ -56,12 +49,24 @@ public class Result {
     public void setValue(Double value) {
         this.value = value;
     }
-
+    @JsonIgnore
     public CheckUp getCheckUp() {
         return checkUp;
     }
 
     public void setCheckUp(CheckUp checkUp) {
         this.checkUp = checkUp;
+    }
+
+    public Set<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
+    }
+
+    public Long getCheckUp_Id(){
+        return checkUp.getId();
     }
 }

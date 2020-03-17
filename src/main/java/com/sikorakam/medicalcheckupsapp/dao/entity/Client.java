@@ -1,6 +1,7 @@
 package com.sikorakam.medicalcheckupsapp.dao.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Client {
     @Column(name = "lastname")
     private String lastname;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<CheckUp> checkUps;
 
     public Client() {

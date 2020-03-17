@@ -2,15 +2,11 @@ package com.sikorakam.medicalcheckupsapp.api;
 
 
 import com.sikorakam.medicalcheckupsapp.dao.ClientRepository;
-import com.sikorakam.medicalcheckupsapp.dao.entity.CheckUp;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PreRemove;
 import javax.validation.Valid;
 
 
