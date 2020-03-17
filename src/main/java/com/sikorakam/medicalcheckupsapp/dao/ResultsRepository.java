@@ -1,6 +1,5 @@
 package com.sikorakam.medicalcheckupsapp.dao;
 
-import com.sikorakam.medicalcheckupsapp.dao.entity.CheckUp;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Result;
 import org.springframework.data.jpa.repository.JpaRepository;
 

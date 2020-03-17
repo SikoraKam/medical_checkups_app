@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Entity
@@ -17,9 +19,7 @@ public class CheckUp {
 
     @Id
     private Long id;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "category")
-    private Category category;
+
     @Column(name = "date")
     private LocalDate date;
 
@@ -31,16 +31,30 @@ public class CheckUp {
     private Client client;
 
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "checkup_test", joinColumns = @JoinColumn(name = "checkup_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"))
+    private Set<Test> tests;
+
 
     public CheckUp(){
     }
 
-    public CheckUp(Category category, LocalDate date) {
-        this.category = category;
+    public CheckUp( LocalDate date) {
+
         this.date = date;
+    }
+
+    public Set<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Long getId() {
@@ -51,13 +65,7 @@ public class CheckUp {
         this.id = id;
     }
 
-    public Category getCategory() {
-        return category;
-    }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public LocalDate getDate() {
         return date;
@@ -66,5 +74,6 @@ public class CheckUp {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
 
 }
