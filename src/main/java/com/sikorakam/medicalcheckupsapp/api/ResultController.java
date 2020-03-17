@@ -48,7 +48,7 @@ public class ResultController {
     @PutMapping("results/{resultId}")
     public Result updateResult(@PathVariable (value = "resultId") Long resultId, @Valid @RequestBody Result resultNew) throws NotFoundException {
         return resultsRepository.findById(resultId).map(result -> {
-            result.setHpv(resultNew.getHpv());
+            result.setValue(resultNew.getValue());
             return resultsRepository.save(result);
         }).orElseThrow(()->new NotFoundException("Result not found"));
     }
