@@ -55,7 +55,7 @@ public class ResultController {
     public Result addResultWithTest(@PathVariable (value = "checkupId") Long checkupId,@PathVariable(value = "testId") Long testId, @Valid @RequestBody Result result) throws NotFoundException {
         Optional<Test> optionalTest = testRepository.findById(testId);
         return checkUpsRepo.findById(checkupId).map(checkUp -> {
-           // result.getTests().add(optionalTest.get());
+            result.setTest(optionalTest.get());
             result.setCheckUp(checkUp);
             return resultsRepository.save(result);
         }).orElseThrow(()->new NotFoundException("checkup not found"));
@@ -76,7 +76,7 @@ public class ResultController {
 
         Optional<Test> optionalTest = testRepository.findById(testId);
         Optional<Result> optionalResult = resultsRepository.findById(resultId);
-        optionalResult.get().getTests().add(optionalTest.get());
+        optionalResult.get().setTest(optionalTest.get());
         return resultsRepository.save(optionalResult.get());
     }
 
