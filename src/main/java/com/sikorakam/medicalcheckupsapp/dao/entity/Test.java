@@ -23,7 +23,7 @@ public class Test {
     @Column(name = "max")
     private Double max;
 
-    @ManyToMany(mappedBy = "tests", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "test", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Result> results;
 
     public Test() {

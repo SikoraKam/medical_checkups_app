@@ -18,14 +18,13 @@ public class Result {
     @Column(name = "value")
     private Double value;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "checkup_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "checkup_id")
     private CheckUp checkUp;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "result_test", joinColumns = @JoinColumn(name = "result_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "test_id", referencedColumnName = "id"))
-    private Set<Test> tests;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_id")
+    private Test test;
 
     public Result() {
     }
@@ -58,12 +57,12 @@ public class Result {
         this.checkUp = checkUp;
     }
 
-    public Set<Test> getTests() {
-        return tests;
+    public Test getTest() {
+        return test;
     }
 
-    public void setTests(Set<Test> tests) {
-        this.tests = tests;
+    public void setTest(Test tests) {
+        this.test = tests;
     }
 
     public Long getCheckUp_Id(){
