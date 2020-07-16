@@ -1,7 +1,8 @@
 package com.sikorakam.medicalcheckupsapp.webControllers;
 
-import com.sikorakam.medicalcheckupsapp.User;
-import com.sikorakam.medicalcheckupsapp.UserRepository;
+
+import com.sikorakam.medicalcheckupsapp.dao.ClientRepository;
+import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,12 +13,12 @@ import java.util.List;
 @RequestMapping("api/public")
 public class PublicRestApiController {
 
-    private UserRepository userRepository;
+    private ClientRepository clientRepository;
 
 
 
-    public PublicRestApiController(UserRepository userRepository){
-        this.userRepository = userRepository;
+    public PublicRestApiController(ClientRepository clientRepository){
+        this.clientRepository = clientRepository;
     }
 
     @GetMapping("test1")
@@ -31,7 +32,7 @@ public class PublicRestApiController {
     }
 
     @GetMapping("users")
-    public List<User> users(){
-        return this.userRepository.findAll();
+    public List<Client> users(){
+        return this.clientRepository.findAll();
     }
 }

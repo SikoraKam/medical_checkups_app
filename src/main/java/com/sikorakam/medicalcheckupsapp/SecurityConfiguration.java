@@ -1,5 +1,6 @@
 package com.sikorakam.medicalcheckupsapp;
 
+import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,10 +17,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private UserPrincipalDetailService userPrincipalDetailService;
+    private ClientPrincipalDetailService clientPrincipalDetailService;
     
-    public SecurityConfiguration(UserPrincipalDetailService userPrincipalDetailService) {
-        this.userPrincipalDetailService = userPrincipalDetailService;
+    public SecurityConfiguration(ClientPrincipalDetailService clientPrincipalDetailService) {
+        this.clientPrincipalDetailService = clientPrincipalDetailService;
     }
 
 
@@ -53,14 +54,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailService);
+        WebMvcConfig webMvcConfig = new WebMvcConfig();
+        daoAuthenticationProvider.setPasswordEncoder(webMvcConfig.passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(this.clientPrincipalDetailService);
 
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 }
