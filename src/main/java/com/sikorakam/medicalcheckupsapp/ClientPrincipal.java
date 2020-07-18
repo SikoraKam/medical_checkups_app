@@ -59,6 +59,6 @@ public class ClientPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.client.getActive() == 1;
-    }
+        return true;
+    } // changed
 }

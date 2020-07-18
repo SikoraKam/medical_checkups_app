@@ -25,8 +25,9 @@ public class ClientServiceImp implements ClientService {
     public void saveClient(Client client){
         client.setPassword(encoder.encode(client.getPassword()));
         client.setStatus("Verfied");
-        Role clientRole = roleRepository.findByRole("SITE_CLIENT"); //diffrent role
+        Role clientRole = roleRepository.findByRole("CLIENT"); //diffrent role
         client.setRoles(new HashSet<Role>(Arrays.asList(clientRole)));
+
         clientRepository.save(client);
     }
 
