@@ -2,9 +2,7 @@ package com.sikorakam.medicalcheckupsapp.dao.entity;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 
 @Entity
 @Table(name = "auth_role")

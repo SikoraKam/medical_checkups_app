@@ -44,12 +44,10 @@ public class Client {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "auth_user_role", joinColumns = @JoinColumn(name = "auth_user_id"), inverseJoinColumns = @JoinColumn(name = "auth_role_id"))
     private Set<Role> roles;
 
-
-    private int active;
     //---------------------------------------------------------------
 
 
@@ -73,7 +71,6 @@ public class Client {
         this.email = email;
         this.password = password;
         this.roles = roles;
-        this.active = 1;
     }
 
     public Long getId() {
@@ -140,11 +137,4 @@ public class Client {
         this.status = status;
     }
 
-    public int getActive() {
-        return active;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
 }
