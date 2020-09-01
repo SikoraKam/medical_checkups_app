@@ -61,4 +61,8 @@ public class ClientPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     } // changed
+
+    public Client getClient(){
+        return this.client;
+    }
 }

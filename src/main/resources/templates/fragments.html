@@ -17,16 +17,40 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/index}"><i class="fa fa-home"></i>Home</a>
+                    <a class="nav-link" href="http://localhost:8080/profile/index"><i class="fa fa-home"></i>Home</a>
                 </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/profile/index}">Profile</a>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <script>
+                        const CLIENT_API_BASE_URL = "http://localhost:8080/api/getClientId";
+
+                        async function getId() {
+                            let response = await fetch(CLIENT_API_BASE_URL);
+                            let text = await response.text();
+                            console.log(text);
+                            return text;
+
+                        }
+                        async function getUrl() {
+                            const url = await getId();
+                            return `http://localhost:3000/view-client/${url}`
+                        }
+
+                        async function genHref() {
+                            a.href = await getUrl();
+                        }
+                        const a = document.createElement('a');
+                        const linkText = document.createTextNode("Profile");
+                        a.appendChild(linkText);
+                        a.title = "link to frontend";
+                        genHref();
+                        document.body.appendChild(a);
+                    </script>
                 </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/admin/index}">Admin</a>
+                    <a class="nav-link" href="http://localhost:3000/clients" >Admin</a>
                 </li>
                 <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{~/management/index}">Management</a>
+                    <a class="nav-link" href="http://localhost:3000/clients">Management</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">

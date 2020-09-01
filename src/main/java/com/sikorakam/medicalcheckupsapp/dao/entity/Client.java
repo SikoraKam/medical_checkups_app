@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
+
 @Table(name = "client")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
