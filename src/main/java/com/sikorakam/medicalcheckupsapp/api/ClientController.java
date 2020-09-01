@@ -1,11 +1,16 @@
 package com.sikorakam.medicalcheckupsapp.api;
 
 
+import com.sikorakam.medicalcheckupsapp.ClientPrincipal;
 import com.sikorakam.medicalcheckupsapp.dao.ClientRepository;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,6 +35,17 @@ public class ClientController {
     @GetMapping("/clients/{id}")
     public Optional<Client> findClientById(@PathVariable Long id){
         return clientRepository.findById(id);
+    }
+
+//    @PostMapping("/getClient/{clientId}")
+//    public String getClient(@PathVariable("clientId") Long id, Model model){
+//        model.addAttribute("CLIENT", findClientById(id));
+//        return "client";
+//    }
+
+    @RequestMapping("/getClientId")
+    public Long getClientId(@AuthenticationPrincipal ClientPrincipal clientPrincipal){
+        return clientPrincipal.getClient().getId();
     }
 
     @PostMapping("/clients")
