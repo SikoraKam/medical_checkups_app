@@ -33,7 +33,12 @@ public class ResultController {
         return resultsRepository.findAll();
     }
 
-    @GetMapping("/checkups/{checkupId}/results")
+    @GetMapping("results/{resultId}")
+    public Optional<Result> findResultById(@PathVariable (value = "resultId") Long resultId){
+        return resultsRepository.findById(resultId);
+    }
+
+    @GetMapping("/checkups/{checkupId}/result")
     public Result findResultByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId) throws NotFoundException {
         if(!checkUpsRepo.existsById(checkUpId)){
             throw new NotFoundException("checkup not found with this id");
@@ -42,6 +47,15 @@ public class ResultController {
         if(results.size()>0)
             return results.get(0);
         else throw new NotFoundException("not found");
+    }
+
+    @GetMapping("/checkups/{checkupId}/results")
+    public List<Result> findResultsByCheckUpId(@PathVariable (value = "checkupId") Long checkUpId) throws NotFoundException {
+        if(!checkUpsRepo.existsById(checkUpId)){
+            throw new NotFoundException("checkup not found with this id");
+        }
+        List<Result> results = resultsRepository.findByCheckUpId(checkUpId);
+        return results;
     }
     @PostMapping("/checkups/{checkupId}/results")
     public Result addResult(@PathVariable (value = "checkupId") Long checkupId, @Valid @RequestBody Result result) throws NotFoundException {
