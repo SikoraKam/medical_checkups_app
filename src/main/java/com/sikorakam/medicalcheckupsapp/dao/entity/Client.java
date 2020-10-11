@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name = "client")
+@Table(name = "client",
+        uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

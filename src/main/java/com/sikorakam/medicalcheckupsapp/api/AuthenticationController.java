@@ -1,23 +1,41 @@
 package com.sikorakam.medicalcheckupsapp.api;
 
+import com.sikorakam.medicalcheckupsapp.dao.ClientRepository;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import com.sikorakam.medicalcheckupsapp.dao.service.ClientService;
+import com.sikorakam.medicalcheckupsapp.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/api/auth")
 public class AuthenticationController {
 
     @Autowired
-    ClientService clientService;
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtUtils jwtUtils;
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateClient(@Valid @RequestBody LoginRequest)
+
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
