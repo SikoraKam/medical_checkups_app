@@ -65,6 +65,7 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
         </dependency>
+<<<<<<< HEAD
         <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -72,6 +73,17 @@
             <version>0.9.1</version>
         </dependency>
 
+=======
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+>>>>>>> a3ba749cb152f5903213321fd51c59c9bf2326f7
     </dependencies>
 
     <build>
