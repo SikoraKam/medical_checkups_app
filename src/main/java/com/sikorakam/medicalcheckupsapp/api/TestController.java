@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api")
 public class TestController {
 
@@ -24,6 +26,11 @@ public class TestController {
     @GetMapping("/tests")
     private List<Test> findAllTests(){
         return testRepository.findAll();
+    }
+
+    @GetMapping("/tests/{id}")
+    private Optional<Test> findTestById(@PathVariable (name = "id") Long testId){
+        return testRepository.findById(testId);
     }
 
     @GetMapping("/results/{resultId}/tests")
