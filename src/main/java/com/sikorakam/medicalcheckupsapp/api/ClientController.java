@@ -1,10 +1,11 @@
 package com.sikorakam.medicalcheckupsapp.api;
 
 
-import com.sikorakam.medicalcheckupsapp.ClientPrincipal;
+
 import com.sikorakam.medicalcheckupsapp.dao.ClientRepository;
 import com.sikorakam.medicalcheckupsapp.dao.entity.Client;
 import com.sikorakam.medicalcheckupsapp.exception.NotFoundException;
+import com.sikorakam.medicalcheckupsapp.security.ClientDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,8 +45,8 @@ public class ClientController {
 //    }
 
     @RequestMapping("/getClientId")
-    public Long getClientId(@AuthenticationPrincipal ClientPrincipal clientPrincipal){
-        return clientPrincipal.getClient().getId();
+    public Long getClientId(@AuthenticationPrincipal ClientDetailsImpl clientPrincipal){
+        return clientPrincipal.getId();
     }
 
     @PostMapping("/clients")

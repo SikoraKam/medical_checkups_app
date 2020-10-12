@@ -74,6 +74,13 @@ public class Client {
         this.roles = roles;
     }
 
+    public Client(@NotNull(message = "First name is obligatory") String name, @NotNull(message = "Last name is obligatory") String lastname, @NotNull(message = "Email is obligatory") @Email(message = "Email is invalid") String email, @NotNull(message = "Password is obligatory") @Length(min = 5, message = "Password should be at least 5 characters") String password) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+    }
+
     public Long getId() {
         return id;
     }

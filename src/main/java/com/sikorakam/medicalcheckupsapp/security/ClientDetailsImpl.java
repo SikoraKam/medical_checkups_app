@@ -78,7 +78,7 @@ public class ClientDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name + "_" + lastname;
+        return email;
     }
 
     @Override
@@ -111,5 +111,21 @@ public class ClientDetailsImpl implements UserDetails {
         }
         ClientDetailsImpl client = (ClientDetailsImpl) o;
         return Objects.equals(id, client.id);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getEmail() {
+        return email;
     }
 }

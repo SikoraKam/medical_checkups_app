@@ -21,7 +21,7 @@ public class ClientDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        Client client = this.clientRepository.findByName(s);
+        Client client = this.clientRepository.findByEmail(s);
         return ClientDetailsImpl.build(client);
     }
 
